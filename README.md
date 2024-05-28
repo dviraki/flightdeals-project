@@ -1,4 +1,4 @@
-Flight Deals Project
+**Flight Deals Project**
 
 This project aims to find the best flight deals and notify users via email. It utilizes APIs to search for flight information, store user data, and send email alerts for price drops.
 Setup
@@ -17,7 +17,7 @@ Setup
         PASSWORD: Your email app password.
         EMAIL_PROVIDER: Your email provider (e.g., Gmail, Yahoo, etc.).
 
-Usage
+**Usage**
 
     Run the main.py file to start the application.
     Follow the prompts to input your first name, last name, and email address.
