@@ -1,19 +1,29 @@
-import requests
-from flight_data import FlightData
+import requests  
+from flight_data import FlightData  
 
 #-------------------------------- CONSTANTS --------------------------------#
-TEQUILA_ENDPOINT =  #Your Tequila api
-TEQUILA_API_KEY =  #Your api key
+TEQUILA_ENDPOINT =  """Your Tequila api  # Endpoint for accessing Tequila API"""
+TEQUILA_API_KEY =  """Your api key  # API key required for accessing Tequila API"""
 
 class FlightSearch:
 
-    def __init__(self):
+    def _init_(self):
+        """
+        Initializes an instance of FlightSearch with an empty list for storing city codes.
+        """
         self.city_codes = []
 
     def get_destination_code(self, city_names):
+        """
+        Retrieves destination codes for the provided city names.
 
+        Parameters:
+            city_names (list): A list of city names for which destination codes are to be retrieved.
+
+        Returns:
+            list: A list of destination codes corresponding to the provided city names.
+        """
         print("get destination codes triggered")
-        #header, api and params
         headers = {"apikey": TEQUILA_API_KEY}
         location_endpoint = f"{TEQUILA_ENDPOINT}/locations/query"
 
@@ -28,10 +38,19 @@ class FlightSearch:
 
         return self.city_codes
 
-    # looking only for direct flights, that leave anytime between tomorrow and in 6 months time.
-    # We're also looking for round trips that return between 7 and 28 days in length.
-    # The currency of the price we get back is shekels.
     def check_flights(self, origin_city_code, destination_city_code, from_time, to_time):
+        """
+        Checks for available flights between origin and destination cities within specified time range.
+
+        Parameters:
+            origin_city_code (str): The origin city code.
+            destination_city_code (str): The destination city code.
+            from_time (datetime): The starting date for flight departure.
+            to_time (datetime): The ending date for flight departure.
+
+        Returns:
+            FlightData or None: FlightData object containing flight details if available, otherwise None.
+        """
         print(f"Check flights triggered for {destination_city_code}")
         headers = {"apikey": TEQUILA_API_KEY}
         query = {
@@ -53,7 +72,7 @@ class FlightSearch:
             params=query,
         )
 
-        #one stop flight
+        #no stop flight
         try:
             data = response.json()["data"][0]
         except IndexError:
@@ -63,7 +82,7 @@ class FlightSearch:
                 headers=headers,
                 params=query,
             )
-            # no stop flight
+            # one stop flight
             try:
                 data = response.json()["data"][0]
             except IndexError:
@@ -80,9 +99,9 @@ class FlightSearch:
                     return_date=data["route"][2]["local_departure"].split("T")[0],
                     stop_overs=1,
                     via_city=data["route"][0]["cityTo"]
-            )
-            print(f"{flight_data.destination_city}: ${flight_data.price}")
-            return flight_data
+                )
+                print(f"{flight_data.destination_city}: ${flight_data.price}")
+                return flight_data
 
         else:
             flight_data = FlightData(
@@ -95,4 +114,4 @@ class FlightSearch:
                 return_date=data["route"][1]["local_departure"].split("T")[0]
             )
             print(f"{flight_data.destination_city}: ${flight_data.price}")
-            return flight_data
+            return flight_data
