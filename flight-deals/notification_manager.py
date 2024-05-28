@@ -1,9 +1,9 @@
 import smtplib
 
 #-------------------------------- CONSTANTS --------------------------------#
-MY_EMAIL = #Your email address#
-PASSWORD = #mail app password
-EMAIL_PROVIDER = # Your email provider (gmail,yahoo, etc..)
+MY_EMAIL = """Company email address"""
+PASSWORD = """mail app password"""
+EMAIL_PROVIDER = """Company email provider (gmail,yahoo, etc..)"""
 
 #sent email
 class NotificationManager:
@@ -17,4 +17,4 @@ class NotificationManager:
                     from_addr=MY_EMAIL,
                     to_addrs=email,
                     msg=f"Subject:New Low Price Flight!\n\n{message}".encode('utf-8')
-                )
+                )
