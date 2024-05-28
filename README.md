@@ -1,4 +1,4 @@
-**Flight Deals Project**
+# Flight Deals Project
 
 This project aims to find the best flight deals and notify users via email. It utilizes APIs to search for flight information, store user data, and send email alerts for price drops.
 Setup
